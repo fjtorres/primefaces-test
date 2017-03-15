@@ -1,0 +1,28 @@
+<b:beans xmlns="http://www.springframework.org/schema/security"
+		 xmlns:b="http://www.springframework.org/schema/beans"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+						http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
+
+	<!-- Remove security for resource files (*.css, *.js, ...) and JSF resources -->
+	<http pattern="/resources/**" security="none" />
+	<http pattern="/javax.faces.resource/**" security="none" />
+
+	<http>
+		<!-- Secured URL configuration -->
+		<intercept-url pattern="/login.jsf" access="permitAll()"/>
+		<intercept-url pattern="/**" access="isAuthenticated()"/>
+			
+		<form-login login-page="/login.jsf" default-target-url="/" />
+		<logout logout-url="/logout" logout-success-url="/login.jsf" delete-cookies="true" />
+	</http>
+
+	<authentication-manager>
+		<authentication-provider ref="customAuthenticationProvider" />
+	</authentication-manager>
+	
+	<b:bean id="customAuthenticationProvider" class="com.github.fjtorres.samples.jsf.primefacesTest.security.CustomAuthenticationProvider">
+		<b:property name="userDetailsService" ref="customUserSecurityService" />
+	</b:bean>
+
+</b:beans>

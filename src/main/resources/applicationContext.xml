@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd
+    http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+	<context:annotation-config />
+	
+	<tx:annotation-driven />
+
+	<!-- Activamos las anotaciones para inyeccion de dependencias -->
+	<context:component-scan
+		base-package="com.github.fjtorres.samples.jsf.primefacesTest" />
+
+<!-- 	<bean id="dataSourceFactory" -->
+<!-- 		class="com.github.fjtorres.samples.jsf.primefacesTest.db.CustomConnextionFactory"></bean> -->
+
+		<bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+			<property name="jndiName" value="java:comp/env/jdbc/TestDB" />
+		</bean>
+
+<!-- 	<bean id="dataSource" factory-method="getDataSource" factory-bean="dataSourceFactory"> -->
+<!-- 		<constructor-arg value="TestDB" /> -->
+<!-- 	</bean> -->
+
+	<bean id="sqlSessionFactory" name="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="configLocation" value="classpath:mybatis.xml" />
+	</bean>
+
+	<!-- MyBatis Data Mapper scanning. Mappers need to be in this package or 
+		a subpackage of this. -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage"
+			value="com.github.fjtorres.samples.jsf.primefacesTest.mappers" />
+		<property name="annotationClass" value="org.springframework.stereotype.Component" />
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
+	</bean>
+
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+<!-- 	<bean id="dataSource2" factory-method="getDataSource" factory-bean="dataSourceFactory"> -->
+<!-- 		<constructor-arg value="TestDB2" /> -->
+<!-- 	</bean> -->
+
+	<bean id="dataSource2" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName" value="java:comp/env/jdbc/TestDB2" />
+	</bean>
+	
+	<bean id="sqlSessionFactory2" name="sqlSessionFactory2" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource2" />
+		<property name="configLocation" value="classpath:mybatis.xml" />
+	</bean>
+
+	<!-- MyBatis Data Mapper scanning. Mappers need to be in this package or 
+		a subpackage of this. -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage"
+			value="com.github.fjtorres.samples.jsf.primefacesTest.mappers2" />
+		<property name="annotationClass" value="org.springframework.stereotype.Component" />
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory2" />
+	</bean>
+
+	<bean id="transactionManager2"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource2" />
+	</bean>
+
+</beans>

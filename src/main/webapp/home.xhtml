@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+
+</h:head>
+<h:body>
+	<p:outputLabel value="Primefaces Test Application"></p:outputLabel>
+	
+	<form action="${request.contextPath}/logout" method="post">
+		<input type="submit" value="Logout"/>
+		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>		
+    </form> 
+	
+	<h:form>
+		
+		<h:commandLink action="#{testController.other}">Navegar</h:commandLink>
+		<br />
+		<h:commandLink action="#{testController.other}" rendered="#{AuthoritiesController.allGranted('admin')}">Navegar para admin</h:commandLink>
+		
+		
+		<h:form>
+		
+			<p:selectOneRadio value="#{testController.radioSelection}">
+				<f:selectItem itemLabel="XXXX" itemValue="XXXX" />
+				<f:selectItem itemLabel="YYYY" itemValue="YYYY" />
+			
+				<f:ajax event="change" execute="@this" render="radioSelectionText textForXXXXContainer"/>
+			
+			</p:selectOneRadio>
+			
+			<h:outputText id="radioSelectionText" value="#{testController.radioSelection}" />
+			
+			<h:panelGroup id="textForXXXXContainer" layout="block">
+				<h:outputText id="textForXXXX" value="SELECTED XXXXXXXX" rendered="#{testController.radioSelection eq 'XXXX'}" />
+			</h:panelGroup>
+			
+			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+		</h:form>
+			
+	</h:form>
+</h:body>
+
+</html>
