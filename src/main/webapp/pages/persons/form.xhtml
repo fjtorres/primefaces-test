@@ -1,0 +1,70 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<f:metadata>
+		<f:viewParam name="personId" value="#{personController.personId}" />
+		<f:viewAction action="#{personController.loadPerson}" />
+	</f:metadata>
+</h:head>
+<h:body>
+	<p:outputLabel value="Primefaces Test Application"></p:outputLabel>
+	
+	<form action="${request.contextPath}/logout" method="post">
+		<input type="submit" value="Logout"/>
+		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>		
+    </form> 
+	
+	<h:form>
+		
+		<h:link outcome="/home?faces-redirect=true">Home</h:link>
+		<h:link outcome="list?faces-redirect=true">Persons</h:link>
+		
+		<h:messages />
+		
+		<h:form>
+		
+			<div>
+				<h:outputLabel for="txtFirstName" value="First name"/>
+				<p:inputText id="txtFirstName" value="#{personController.person.firstName}" label="First name" required="true" a:autofocus="true" />
+			</div>
+			
+			<div>
+				<h:outputLabel for="txtLastName" value="Last name"/>
+				<p:inputText id="txtLastName" value="#{personController.person.lastName}" label="Last name" required="true" />
+			</div>
+			
+			<div>
+				<h:outputLabel for="txtBirthDate" value="Birth date"/>
+				<p:calendar id="txtBirthDate" value="#{personController.person.birthDate}" pattern="dd/MM/yyyy" label="Birth date" required="true" />
+			</div>
+			
+			<div>
+				<h:outputLabel for="comboGender" value="Gender"/>
+				<h:selectOneMenu id="comboGender" value="#{personController.person.gender}">
+					<f:selectItems value="#{personController.genders}" var="gender" itemValue="#{gender.name()}" itemLabel="#{gender.name()}"/>
+				</h:selectOneMenu>
+			</div>
+			
+			<div>
+				<h:outputLabel for="comboTest" value="Test"/>
+				<h:selectOneMenu id="comboTest" value="#{personController.testSelected}" converter="testConverter">
+					<f:selectItems value="#{personController.testList}" var="test" itemValue="#{test}" itemLabel="#{test.description}"/>
+				</h:selectOneMenu>
+			</div>
+			
+			<h:commandButton id="btnSavePerson" action="#{personController.save}" value="Save" />
+			
+			<h:inputHidden value="#{personController.person.id}" />
+			
+			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+		</h:form>
+			
+	</h:form>
+</h:body>
+
+</html>

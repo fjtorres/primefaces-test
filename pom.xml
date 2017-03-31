@@ -46,6 +46,13 @@
 		</dependency>
 
 		<dependency>
+			<groupId>javax.el</groupId>
+			<artifactId>el-api</artifactId>
+			<version>2.2</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
 			<!-- This is the Mojarra Implementation of JSF -->
 			<groupId>org.glassfish</groupId>
 			<artifactId>javax.faces</artifactId>
@@ -98,7 +105,7 @@
 			<artifactId>spring-security-config</artifactId>
 			<version>4.1.0.RELEASE</version>
 		</dependency>
-		
+
 		<!-- MyBatis dependencies -->
 
 		<dependency>
@@ -122,5 +129,5 @@
 		</dependency>
 
 	</dependencies>
-	
+
 </project>

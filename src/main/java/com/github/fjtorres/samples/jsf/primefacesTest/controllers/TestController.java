@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
-import com.github.fjtorres.samples.jsf.primefacesTest.services.TestService;
+import com.github.fjtorres.samples.jsf.primefacesTest.services.PersonService;
 import com.github.fjtorres.samples.jsf.primefacesTest.services.TestService2;
 
 @Controller
@@ -12,7 +12,7 @@ import com.github.fjtorres.samples.jsf.primefacesTest.services.TestService2;
 public class TestController {
 
    @Autowired
-   private TestService service;
+   private PersonService service;
    
    @Autowired
    private TestService2 service2;
@@ -21,9 +21,6 @@ public class TestController {
    
    public String home() {
 
-      service.test();
-      service2.test();
-      
       return "home";
    }
 
