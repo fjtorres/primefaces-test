@@ -22,6 +22,9 @@
 		<h:link outcome="/pages/persons/list?faces-redirect=true">Persons</h:link>
 		<br />
 		<h:commandLink action="#{testController.other}" rendered="#{AuthoritiesController.allGranted('admin')}">Other page for admin</h:commandLink>
+		<br />
+		<h:link outcome="/pages/reports/form?faces-redirect=true">Reports</h:link>
+		<br />
 		
 		<h:form>
 		

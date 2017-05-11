@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<f:metadata>
+		<f:viewAction action="#{reportController.loadReports}" />
+	</f:metadata>
+</h:head>
+<h:body>
+	<p:outputLabel value="Primefaces Test Application"></p:outputLabel>
+	
+	<form action="${request.contextPath}/logout" method="post">
+		<input type="submit" value="Logout"/>
+		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>		
+    </form> 
+	
+	<h:form>
+		
+		<h:link outcome="/home?faces-redirect=true">Home</h:link>
+		<h:link outcome="/pages/persons/list?faces-redirect=true">Persons</h:link>
+		
+		<h:messages />
+		
+		<h:outputText rendered="#{appContext.running}" value="Process in execution...."/>
+		
+		<h:form>
+		
+			<div>
+				<h:outputLabel for="comboReports" value="Reports"/>
+				<h:selectOneMenu id="comboReports" value="#{reportController.selectedReport}">
+					<f:selectItems value="#{reportController.reports}" />
+				</h:selectOneMenu>
+			</div>
+			
+			<h:commandButton id="btnExecuteReport" action="#{reportController.executeReport}" value="Execute" disabled="#{appContext.running}" />
+			
+			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+		</h:form>
+			
+	</h:form>
+</h:body>
+
+</html>
